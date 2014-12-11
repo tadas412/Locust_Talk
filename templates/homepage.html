@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" type="text/css" href="static/master.css">
+
+<title>Locust Talk</title>
+
+	<body>
+	
+		<img src="static/logo.png" alt="Locust Talk" >
+		
+		<h2> NavBar </h2>
+		
+		
+		<ul>
+		{% for item in navbar %}
+		<form action="/forum/{{ item }}">
+    		<input type="submit" value="{{ item }}">
+		</form>
+		{% endfor %}
+		</ul>
+		
+		<h2> Categories </h2>
+		
+		<ul>
+		{% for item in categories %}
+		<button>{{ item }}</button><br>
+		{% endfor %}
+		</ul>
+	
+	</body>
+</html>

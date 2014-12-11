@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='master.css') }}">
+
+<title>Locust Talk</title>
+
+	<body>
+
+		<div class="logo">
+			Test.
+		</div>
+
+		<h1> {{ path }}</h1>
+
+		<h2> NavBar </h2>
+		
+		
+		<ul>
+		{% for item in navbar %}
+		<form action="/forum/{{ item }}">
+    		<input type="submit" value="{{ item }}">
+		</form>
+		{% endfor %}
+		</ul>
+		
+		<h2> Categories </h2>
+		
+		
+		<ul>
+		{% if categories != None %}
+			{% for cat in categories %}
+			<form action="/forum/{{ path }}/{{ cat }}">
+    			<input type="submit" value="{{ cat }}">
+			</form>
+			{% endfor %}
+		{% endif %}
+		</ul>
+		
+		<h2> Topics </h2>
+		
+		<ul>
+		{% for item in topics %}
+		{{ item }}<br>
+		{% endfor %}
+		</ul>
+
+		<button> START NEW TOPIC </button>
+	
+	</body>
+</html>
