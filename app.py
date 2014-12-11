@@ -1,15 +1,57 @@
 from flask import Flask
 from flask import render_template
-import sys, os
-curdir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(curdir + "/views")
-import homepage as hp
+#import sys, os
+#curdir = os.path.dirname(os.path.realpath(__file__))
+#sys.path.append(curdir + "/views")
+
+import data_calls as dc
+
 
 app = Flask(__name__)
 
+# Homepage
+
 @app.route('/')
 def homepage():
-	return render_template('homepage.html', l=hp.get_categories())
+	return render_template('homepage.html', categories=dc.get_high_categories(), 
+		navbar=dc.navbar_categories())
+
+
+# Topic pages
+
+@app.route('/forum/<category>')
+@app.route('/forum/<category>/<subcat1>')
+@app.route('/forum/<category>/<subcat1>/<subcat2>')
+@app.route('/forum/<category>/<subcat1>/<subcat2>/<subcat3>')
+def topicpage(category=None, subcat1=None, subcat2=None, subcat3=None):
+	if not category:
+		return render_template('errorpage.html')
+	path = dc.determine_path(category, subcat1, subcat2, subcat3)
+	cats = dc.determine_cats(category, subcat1, subcat2, subcat3)
+	topics = dc.determine_topics(category, subcat1, subcat2, subcat3)
+	return render_template('topicpage.html', path=path, categories=cats, 
+		topics=topics, navbar=dc.navbar_categories())
+
+# Responses page
+@app.route('/forum/topic')
+def responsespage():
+	# Get topic ID from request.args
+	pass
+
+# Post page
+@app.route('/forum/post')
+def postpage():
+	# Use request.args to pull in details about where the post is being made
+	# i.e. list of cat/subcats
+	pass
+
+# Submit post page
+# TODO - restrict to POST
+@app.route('/forum/post/submit')
+def submitpost():
+	pass
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
