@@ -1,0 +1,7 @@
+Django==1.7.1
+Flask==0.10.1
+Jinja2==2.7.3
+httplib2==0.9
+virtualenv==1.11.6
+wxPython==3.0.1.1
+wxPython-common==3.0.1.1
