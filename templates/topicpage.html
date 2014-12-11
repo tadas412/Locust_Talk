@@ -6,9 +6,7 @@
 
 	<body>
 
-		<div class="logo">
-			Test.
-		</div>
+		<div class="logo"></div>
 
 		<h1> {{ path }}</h1>
 
@@ -44,7 +42,10 @@
 		{% endfor %}
 		</ul>
 
-		<button> START NEW TOPIC </button>
+		<form action="/forum/posttopic" method="get">
+			<input type="hidden" value="{{ path }}" name="path">
+			<input type="submit" value="START NEW TOPIC">
+		</form>
 	
 	</body>
 </html>

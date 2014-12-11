@@ -5,6 +5,7 @@ from flask import render_template
 #sys.path.append(curdir + "/views")
 
 import data_calls as dc
+from flask import request
 
 
 app = Flask(__name__)
@@ -39,11 +40,11 @@ def responsespage():
 	pass
 
 # Post page
-@app.route('/forum/post')
-def postpage():
-	# Use request.args to pull in details about where the post is being made
-	# i.e. list of cat/subcats
-	pass
+@app.route('/forum/posttopic')
+def posttopicpage():
+	print request.args
+	return render_template('posttopicpage.html', path=request.args['path'],
+		navbar=dc.navbar_categories())
 
 # Submit post page
 # TODO - restrict to POST

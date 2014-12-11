@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
-<link rel="stylesheet" type="text/css" href="static/master.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='master.css') }}">
 
 <title>Locust Talk</title>
 
 	<body>
 	
-		<img src="static/logo.png" alt="Locust Talk" >
+		<div class="logo"></div>
 		
 		<h2> NavBar </h2>
 		
@@ -22,9 +22,13 @@
 		<h2> Categories </h2>
 		
 		<ul>
-		{% for item in categories %}
-		<button>{{ item }}</button><br>
-		{% endfor %}
+		{% if categories != None %}
+			{% for cat in categories %}
+			<form action="/forum/{{ cat }}">
+    			<input type="submit" value="{{ cat }}">
+			</form>
+			{% endfor %}
+		{% endif %}
 		</ul>
 	
 	</body>
