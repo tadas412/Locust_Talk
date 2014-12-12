@@ -42,7 +42,6 @@ def responsespage():
 # Post page
 @app.route('/forum/posttopic')
 def posttopicpage():
-	print request.args
 	return render_template('posttopicpage.html', path=request.args['path'],
 		navbar=dc.navbar_categories())
 

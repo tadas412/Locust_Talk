@@ -21,7 +21,7 @@
 		{% endfor %}
 		</ul>
 		
-		<h2> Categories </h2>
+		<h2> Subcategories </h2>
 		
 		
 		<ul>
@@ -38,7 +38,7 @@
 		
 		<ul>
 		{% for item in topics %}
-		{{ item }}<br>
+		<a href="/forum?topic_id={{ item.topic_id }}"> {{item.topic_name }}</a><br>
 		{% endfor %}
 		</ul>
 
