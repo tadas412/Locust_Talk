@@ -105,12 +105,55 @@ def determine_topics(category, *subcat_list):
 	cursor = conn.cursor()
 	cursor.execute(query)
 	query_results = cursor.fetchall();
-	print query_results
+	cursor.close()
+
 	results = []
 	for result in query_results:
-		results.append(Topic(result[0], result[1], result[2]))
-	cursor.close()
+		results.append(Topic(result[0], result[1], result[2])) # converts sql output to python class
 	return results
 
+def get_messages(topic_id):
+	cursor = conn.cursor()
+	cursor.execute("SELECT message_id, message, author FROM messages WHERE topic_id = %s", (topic_id,))
+	query_results = cursor.fetchall()
+	cursor.close()
+
+	if not query_results:
+		return None
+	results = []
+	for result in query_results:
+		results.append(Message(result[0], result[1], result[2]))
+	return results
+
+def get_topic_by_id(topic_id):
+	cursor = conn.cursor()
+	cursor.execute("SELECT topic_name, topic_id, author, category, subcat1, subcat2, subcat3 FROM topics WHERE topic_id = %s", (topic_id,))
+	query_results = cursor.fetchone()
+	cursor.close()
+
+	if not query_results:
+		return Topic(None, None, None)
+	topic = Topic(query_results[0], query_results[1], query_results[2],
+		query_results[3], query_results[4], query_results[5], query_results[6])
+	return topic
+
+def add_message(topic_id, author, message):
+	cursor = conn.cursor()
+	cursor.execute("INSERT INTO messages (author, message, topic_id) VALUES(%s, %s, %s);", (author, message, topic_id))
+	conn.commit()
+	cursor.close()
+
+def add_topic(author, topic_name, path):
+	cats = path.split('/')
+	category = cats[0]
+	subcats = [val for val in cats[1:]]
+	subcats.extend([None for i in range(3 - len(subcats))])
+	print "len = {0}".format(len(subcats))
+
+	cursor = conn.cursor()
+	cursor.execute("INSERT INTO topics (topic_name, category, author, subcat1, subcat2, subcat3) \
+		VALUES(%s, %s, %s, %s, %s, %s);", (topic_name, category, author, subcats[0], subcats[1], subcats[2]))
+	conn.commit()
+	cursor.close()
 
 

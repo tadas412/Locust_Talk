@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from flask import redirect
 #import sys, os
 #curdir = os.path.dirname(os.path.realpath(__file__))
 #sys.path.append(curdir + "/views")
@@ -20,10 +21,10 @@ def homepage():
 
 # Topic pages
 
-@app.route('/forum/<category>')
-@app.route('/forum/<category>/<subcat1>')
-@app.route('/forum/<category>/<subcat1>/<subcat2>')
-@app.route('/forum/<category>/<subcat1>/<subcat2>/<subcat3>')
+@app.route('/forum/view/<category>')
+@app.route('/forum/view/<category>/<subcat1>')
+@app.route('/forum/view/<category>/<subcat1>/<subcat2>')
+@app.route('/forum/view/<category>/<subcat1>/<subcat2>/<subcat3>')
 def topicpage(category=None, subcat1=None, subcat2=None, subcat3=None):
 	if not category:
 		return render_template('errorpage.html')
@@ -34,12 +35,17 @@ def topicpage(category=None, subcat1=None, subcat2=None, subcat3=None):
 		topics=topics, navbar=dc.navbar_categories())
 
 # Responses page
-@app.route('/forum/topic')
+@app.route('/forum/view')
 def responsespage():
-	# Get topic ID from request.args
-	pass
+	topic_id = int(request.args['topic_id'])
+	topic = dc.get_topic_by_id(topic_id)
+	messages = dc.get_messages(topic_id)
+	return render_template('messagepage.html', topic_name=topic.topic_name, 
+		messages=messages, navbar=dc.navbar_categories(), topic_id=topic_id)
 
-# Post page
+
+
+# Post topic page
 @app.route('/forum/posttopic')
 def posttopicpage():
 	return render_template('posttopicpage.html', path=request.args['path'],
@@ -47,9 +53,29 @@ def posttopicpage():
 
 # Submit post page
 # TODO - restrict to POST
-@app.route('/forum/post/submit')
-def submitpost():
-	pass
+@app.route('/forum/posttopic/submit', methods=['POST'])
+def submitposttopic():
+	print request.form
+	dc.add_topic(request.form['name'], request.form['topic_title'], 
+		request.form['path'])
+	return redirect('/forum/view/{0}'.format(request.form['path']))
+
+
+
+# Post message page
+@app.route('/forum/postmessage')
+def postmessagepage():
+	topic_id = int(request.args['topic_id'])
+	topic = dc.get_topic_by_id(topic_id)
+	return render_template('postmessagepage.html', topic=topic,
+		navbar=dc.navbar_categories())
+
+# Submit post message
+@app.route('/forum/postmessage/submit', methods=['POST'])
+def submitpostmessage():
+	topic_id = int(request.form['topic_id'])
+	dc.add_message(topic_id, request.form['name'], request.form['message'])
+	return redirect('/forum/view?topic_id={0}'.format(topic_id))
 
 
 

@@ -15,7 +15,7 @@
 		
 		<ul>
 		{% for item in navbar %}
-		<form action="/forum/{{ item }}">
+		<form action="/forum/view/{{ item }}">
     		<input type="submit" value="{{ item }}">
 		</form>
 		{% endfor %}
@@ -27,7 +27,7 @@
 		<ul>
 		{% if categories != None %}
 			{% for cat in categories %}
-			<form action="/forum/{{ path }}/{{ cat }}">
+			<form action="/forum/view/{{ path }}/{{ cat }}">
     			<input type="submit" value="{{ cat }}">
 			</form>
 			{% endfor %}
@@ -38,7 +38,7 @@
 		
 		<ul>
 		{% for item in topics %}
-		<a href="/forum?topic_id={{ item.topic_id }}"> {{item.topic_name }}</a><br>
+		<a href="/forum/view?topic_id={{ item.topic_id }}"> {{item.topic_name }}</a><br>
 		{% endfor %}
 		</ul>
 

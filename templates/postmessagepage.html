@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='master.css') }}">
+
+<title>Locust Talk</title>
+
+	<body>
+	
+		<div class="logo"></div>
+		
+		<h2> NavBar </h2>
+		
+		
+		<ul>
+		{% for item in navbar %}
+		<form action="/forum/view/{{ item }}">
+    		<input type="submit" value="{{ item }}">
+		</form>
+		{% endfor %}
+		</ul>
+		
+		<h2> New Response </h2>
+
+		<h1> You're posting a new message in {{ topic.topic_name }} </h1>
+
+		<form action="/forum/postmessage/submit" method="post">
+		Name: <input type="text" name="name">
+		<br>
+		Message:<br>
+		<textarea cols="40" rows="5" name="message">
+		</textarea>
+		<br>
+		<input type="hidden" value="{{ topic.topic_id }}" name="topic_id">
+		<input type="submit" value="Post Response">
+		</form>
+		
+
+	
+	</body>
+</html>

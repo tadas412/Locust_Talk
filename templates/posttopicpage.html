@@ -19,17 +19,20 @@
 		{% endfor %}
 		</ul>
 		
-		<h2> Categories </h2>
+		<h2> New Topic </h2>
+
+		<h1> You're posting a new topic in {{ path }} </h1>
+
+		<form action="/forum/posttopic/submit" method="post" >
+		Name: <input type="text" name="name">
+		<br>
+		Topic Title: <input type="text" name="topic_title">
+		<br>
+		<input type="hidden" value="{{ path }}" name="path">
+		<input type="submit" value="Post Topic">
+		</form>
 		
-		<ul>
-		{% if categories != None %}
-			{% for cat in categories %}
-			<form action="/forum/view/{{ cat }}">
-    			<input type="submit" value="{{ cat }}">
-			</form>
-			{% endfor %}
-		{% endif %}
-		</ul>
+
 	
 	</body>
 </html>

@@ -5,9 +5,11 @@
 <title>Locust Talk</title>
 
 	<body>
-	
+
 		<div class="logo"></div>
+
 		
+
 		<h2> NavBar </h2>
 		
 		
@@ -18,18 +20,25 @@
 		</form>
 		{% endfor %}
 		</ul>
+
+		<h1> {{ topic_name }}</h1>
 		
-		<h2> Categories </h2>
 		
 		<ul>
-		{% if categories != None %}
-			{% for cat in categories %}
-			<form action="/forum/view/{{ cat }}">
-    			<input type="submit" value="{{ cat }}">
-			</form>
+		{% if messages != None %}
+			{% for msg in messages %}
+			<br>
+			AUTHOR: {{ msg.author}} <br>
+			MESSAGE: <br>
+			{{ msg.message }} <br>
 			{% endfor %}
 		{% endif %}
 		</ul>
+
+		<form action="/forum/postmessage" method="get">
+			<input type="hidden" value="{{ topic_id }}" name="topic_id">
+			<input type="submit" value="POST A RESPONSE">
+		</form>
 	
 	</body>
 </html>
