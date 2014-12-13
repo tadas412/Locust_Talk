@@ -1,14 +1,14 @@
 from flask import Flask
 from flask import render_template
 from flask import redirect
-#import sys, os
-#curdir = os.path.dirname(os.path.realpath(__file__))
-#sys.path.append(curdir + "/views")
-
-import data_calls as dc
 from flask import request
 
-
+from optparse import OptionParser
+import sys, os
+curdir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(curdir + "/data") # allows import of files in /data
+import data_calls as dc
+from data_classes import *
 app = Flask(__name__)
 
 # Homepage
@@ -28,18 +28,26 @@ def homepage():
 def topicpage(category=None, subcat1=None, subcat2=None, subcat3=None):
 	if not category:
 		return render_template('errorpage.html')
+	if category == "Home":
+		return redirect("/")
+	elif category == "About Us":
+		return redirect("/about_us")
 	path = dc.determine_path(category, subcat1, subcat2, subcat3)
 	cats = dc.determine_cats(category, subcat1, subcat2, subcat3)
 	topics = dc.determine_topics(category, subcat1, subcat2, subcat3)
 	return render_template('topicpage.html', path=path, categories=cats, 
 		topics=topics, navbar=dc.navbar_categories())
 
+@app.route('/about_us')
+def aboutus():
+	return render_template('aboutus.html', navbar=dc.navbar_categories())
+
 # Responses page
 @app.route('/forum/view')
 def responsespage():
 	topic_id = int(request.args['topic_id'])
 	topic = dc.get_topic_by_id(topic_id)
-	messages = dc.get_messages(topic_id)
+	messages = topic.get_messages()
 	return render_template('messagepage.html', topic_name=topic.topic_name, 
 		messages=messages, navbar=dc.navbar_categories(), topic_id=topic_id)
 
@@ -52,7 +60,6 @@ def posttopicpage():
 		navbar=dc.navbar_categories())
 
 # Submit post page
-# TODO - restrict to POST
 @app.route('/forum/posttopic/submit', methods=['POST'])
 def submitposttopic():
 	print request.form
@@ -74,10 +81,18 @@ def postmessagepage():
 @app.route('/forum/postmessage/submit', methods=['POST'])
 def submitpostmessage():
 	topic_id = int(request.form['topic_id'])
-	dc.add_message(topic_id, request.form['name'], request.form['message'])
+	topic = dc.get_topic_by_id(topic_id)
+	topic.add_message(request.form['name'], request.form['message'])
 	return redirect('/forum/view?topic_id={0}'.format(topic_id))
 
 
+def main():
+	optparser = OptionParser()
+	optparser.add_option('-p', dest="port", type="int", default="5000")
+	optparser.add_option('-d', dest="debug", action="store_true", default=False)
+	options, _ = optparser.parse_args()
+	app.run(debug=options.debug, port=options.port)
+
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	main()

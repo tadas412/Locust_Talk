@@ -92,8 +92,6 @@ def determine_cats(category, *subcat_list):
 	return cats.keys()
 
 def determine_topics(category, *subcat_list):
-	# pull from db using category, subcat_list, to return list of topic name strings
-	# afterward, change to returning an object (i.e. class) that has at least topic name, topic id
 	if len(subcat_list) != 3:
 		print "WARNING: subcat_list not length 3"
 	query = "SELECT topic_name, topic_id, author FROM topics WHERE category = \'" + category + "\'"
@@ -109,20 +107,7 @@ def determine_topics(category, *subcat_list):
 
 	results = []
 	for result in query_results:
-		results.append(Topic(result[0], result[1], result[2])) # converts sql output to python class
-	return results
-
-def get_messages(topic_id):
-	cursor = conn.cursor()
-	cursor.execute("SELECT message_id, message, author FROM messages WHERE topic_id = %s", (topic_id,))
-	query_results = cursor.fetchall()
-	cursor.close()
-
-	if not query_results:
-		return None
-	results = []
-	for result in query_results:
-		results.append(Message(result[0], result[1], result[2]))
+		results.append(Topic(conn, result[0], result[1], result[2])) # converts sql output to python class
 	return results
 
 def get_topic_by_id(topic_id):
@@ -132,16 +117,10 @@ def get_topic_by_id(topic_id):
 	cursor.close()
 
 	if not query_results:
-		return Topic(None, None, None)
-	topic = Topic(query_results[0], query_results[1], query_results[2],
+		return Topic(conn, None, None, None)
+	topic = Topic(conn, query_results[0], query_results[1], query_results[2],
 		query_results[3], query_results[4], query_results[5], query_results[6])
 	return topic
-
-def add_message(topic_id, author, message):
-	cursor = conn.cursor()
-	cursor.execute("INSERT INTO messages (author, message, topic_id) VALUES(%s, %s, %s);", (author, message, topic_id))
-	conn.commit()
-	cursor.close()
 
 def add_topic(author, topic_name, path):
 	cats = path.split('/')
