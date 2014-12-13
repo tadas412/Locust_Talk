@@ -35,6 +35,12 @@
 		{% endif %}
 		</ul>
 
+		<br>
+		GO TO PAGE: 
+		{% for num in pages %}
+		<a href="/forum/view?topic_id={{ topic_id }}&amp;page={{ num }}"> {{ num }}</a> 
+		{% endfor %}
+
 		<form action="/forum/postmessage" method="get">
 			<input type="hidden" value="{{ topic_id }}" name="topic_id">
 			<input type="submit" value="POST A RESPONSE">

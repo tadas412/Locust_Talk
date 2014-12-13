@@ -49,7 +49,8 @@ categories = {
 import os
 import psycopg2
 import urlparse
-from data_classes import *
+import utils
+from data_classes import Topic, Message
 
 urlparse.uses_netloc.append("postgres")
 try:
@@ -65,12 +66,15 @@ conn = psycopg2.connect(
     port=url.port
 )
 
+@utils.debug
 def navbar_categories():
 	return ["Home"] + get_high_categories() + ["About Us"]
 
+@utils.debug
 def get_high_categories():
 	return categories.keys()
 
+@utils.debug
 def determine_path(*cat_list):
 	path = cat_list[0]
 	for val in cat_list[1:]:
@@ -78,7 +82,7 @@ def determine_path(*cat_list):
 		path = "/".join([path, val])
 	return path
 
-
+@utils.debug
 def determine_cats(category, *subcat_list):
 	if not category:
 		return None
@@ -91,6 +95,7 @@ def determine_cats(category, *subcat_list):
 		cats = cats[val.encode('ascii', 'ignore')]
 	return cats.keys()
 
+@utils.debug
 def determine_topics(category, *subcat_list):
 	if len(subcat_list) != 3:
 		print "WARNING: subcat_list not length 3"
@@ -110,6 +115,7 @@ def determine_topics(category, *subcat_list):
 		results.append(Topic(conn, result[0], result[1], result[2])) # converts sql output to python class
 	return results
 
+@utils.debug
 def get_topic_by_id(topic_id):
 	cursor = conn.cursor()
 	cursor.execute("SELECT topic_name, topic_id, author, category, subcat1, subcat2, subcat3 FROM topics WHERE topic_id = %s", (topic_id,))
@@ -122,6 +128,7 @@ def get_topic_by_id(topic_id):
 		query_results[3], query_results[4], query_results[5], query_results[6])
 	return topic
 
+@utils.debug
 def add_topic(author, topic_name, path):
 	cats = path.split('/')
 	category = cats[0]

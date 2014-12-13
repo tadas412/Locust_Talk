@@ -1,3 +1,5 @@
+import utils
+
 class Topic:
 
 	def __init__(self, conn, topic_name, topic_id, author, category=None, subcat1=None, subcat2=None, subcat3=None):
@@ -21,9 +23,22 @@ class Topic:
 		except:
 			return False
 
+	@utils.debug
+	def get_num_pages(self):
+		if not self.topic_id:
+			print "WARNING: get_num_pages called without setting topic_id"
+			return None
+
+		cursor = self.conn.cursor()
+		cursor.execute("SELECT COUNT(*) FROM messages WHERE topic_id = %s;", (self.topic_id,))
+		result = int(cursor.fetchone()[0])
+		cursor.close()
+		return (result / 5) if (result % 5 == 0) else (result / 5 + 1)
+
+
 	# Requires topic_id to be set
+	@utils.debug
 	def get_messages(self):
-		print "getting message"
 		if not self.topic_id:
 			print "WARNING: get_messages called without setting topic_id"
 			return None
@@ -39,8 +54,8 @@ class Topic:
 			results.append(Message(result[0], result[1], result[2]))
 		return results
 
+	@utils.debug
 	def add_message(self, author, message):
-		print "adding message"
 		if not self.topic_id:
 			print "WARNING: add_message called without setting topic_id"
 			return None
@@ -69,4 +84,3 @@ class Message:
 		except:
 			return False
 
-			
