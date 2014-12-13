@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='master.css') }}">
+
+<title>Locust Talk</title>
+
+	<body>
+	
+		<div class="logo"></div>
+		
+		<h2> NavBar </h2>
+		
+		
+		<ul>
+		{% for item in navbar %}
+		<form action="/forum/view/{{ item }}">
+    		<input type="submit" value="{{ item }}">
+		</form>
+		{% endfor %}
+		</ul>
+		
+		<h2> Developer: Tadas Antanavicius </h2>
+		
+
+	
+	</body>
+</html>
