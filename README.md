@@ -3,7 +3,9 @@ Locust Talk
 
 Web app that allows visitors to post messages on a forum-style board.
 
-Github: 
+VIEW THIS README ON GITHUB!
+
+Github: https://github.com/tadas412/Locust_Talk
 Heroku live app: locust-talk.herokuapp.com
 
 <h2> Overview </h2>
@@ -25,12 +27,12 @@ The simplest way to use Locust Talk is to visit the live site on locust-talk.her
 
 <h2> CIS 192 Final Project Requirements </h2>
 
-<h3> Your app should be callable from the command line, and should take as input at least two arguments/flags that determine its usage, which you should consume using the optparse module. </h3>
+<h4> Your app should be callable from the command line, and should take as input at least two arguments/flags that determine its usage, which you should consume using the optparse module. </h4>
 
 Locust Talk is callable from the command line on a local machine with the usage "python app.py [-d] [-p PORT]". The -d argument should be True or False based on if you want Flask to run in debugging mode - the application will be allowed to execute arbitrary Python code on your computer. If you're in debugging mode, the app will also print out a log of the functions it's using and associated times (in seconds) that they start. The -p PORT argument determines on which port to mount the app when it runs locally.
 
 
-<h3> Define and use a custom class (okay to inherit from something else, as in wxpython). </h3>
+<h4> Define and use a custom class (okay to inherit from something else, as in wxpython). </h4>
 
 There are two custom classes defined in data/data_classes.py. 
 
@@ -38,56 +40,70 @@ The first one is Topic, which stores information about a particular conversation
 
 The other one is Message, which simply stores information about a particular message (message ID, message, author).
 
-<h3> Define at least one magic method. </h3>
+<h4> Define at least one magic method. </h4>
 
 Each of the custom classes described above have init, repr, and eq methods. 
 
-<h3> Use at least two of the following modules: itertools, random, re, os </h3>
+<h4> Use at least two of the following modules: itertools, random, re, os </h4>
 
 In app.py, I used <b>os</b> to add the relative path /data to the system path. In particular, os was used to grab the current directory name, and then /data was appended to that path, which was added to the system path. This allowed me to store python modules in /data. 
 
 Also in app.py, I used <b>itertools</b> to islice messages onto the correct pages corresponding to a topic. If there are more than 5 messages, islice selects the five (or fewer) that should be present on the current page.
 
-<h3> Define and use a custom decorator. </h3>
+<h4> Define and use a custom decorator. </h4>
 
 My custom decorator is defined in /data/utils.py. It is a debugger decorator, with which I decorated all non-routing functions. If the -d flag is used when running the app, this will result in those decorated functions printing when they are called: their name, args, and time passed since start is printed. 
 
 
-<h3> Include documentation with a detailed explanation of how to use your app. Be sure to point out anything especially cool that you did! </h3>
+<h4> Include documentation with a detailed explanation of how to use your app. Be sure to point out anything especially cool that you did! </h4>
 
 This document explains usage of the app. The most relevant features to note:
 
 <ul>
-Use of PostgreSQL usage to persistently store all data
-Full integration and functionality with live Heroku app
-Fully up and running on Heroku
-Page counter / slicer is pretty cool
+	<li>Use of PostgreSQL usage to persistently store all data
+	<li>Full integration and functionality with live Heroku app
+	<li>Fully up and running on Heroku
+	<li>Page counter / slicer is pretty cool
 </ul>
 
 
-<h2> Design Process </h2>
+<h2> Development Process </h2>
+
+I began by sketching out my vision for the product before beginning any coding. Using my final proposal as a guide, I hashed out the goal of the product, a hierarchy of categories I planned to integrate, and a map of general site flow. I split the work I would have to do into stages:
+
+1) Review material from class (e.g. Flask, SQL) <br>
+2) Research where to host the app (I eventually came up with Heroku) <br>
+3) Review and learn the relevant SQL (Heroku came with a PostgreSQL addon, so I used that) <br>
+4) Write the Flask routing code for navigating through the categories <br>
+5) Integrate / link together buttons on the various pages so that one could navigate through the categories <br>
+6) Implement use of databases to store and display all the relevant data <br>
+7) Enable ability for end-user to add to the databases through post topic/message system <br>
+8) Review the final project specifications and add any features that did not come naturally through the development thus far <br>
+9) Implement Bootstrap to make everything look nice <br>
+
+I ended up following this process fairly well through step 8 - unfortunately I did not find the time to get through step 9, the addition of Bootstrap (I am unsure how easily it is implemented, as I have not used it before). 
+
+I did not encounter any major walls throughout my development process. There were small hurdles relevant to each of the major aspects - Flask, SQL, and Heroku - that I passed by reviewing documentation and class notes. On the whole, I put about 19 hours of work into this project as it stands at submission.
 
 <h2> Database Structure </h2>
 
 
-topics
-<t>	topic_id <br>
-<t>	topic_name <br>
-<t>	author <br>
-<t>	category <br>
-<t>	subcat1 <br>
-<t>	subcat2 <br>
-<t>	subcat3 <br>
+Table: <i>topics</i> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;topic_id - bigint<br>
+&nbsp;&nbsp;&nbsp;&nbsp;topic_name - varchar(128)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author - varchar(32)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;category - varchar(32)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subcat1 - varchar(32)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subcat2 - varchar(32)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subcat3 - varchar(32)<br>
 
 
 messages
-<t>	message_id <br>
-<t>	author <br>
-<t>	message <br>
-<t>	topic_id (foreign key dependent) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;message_id - bigint<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author - varchar(32) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;message - text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;topic_id (foreign key dependent on topics.topic_id) - bigint<br>
 
-
-All varchar(32), varchar(128), or bigint
 
 <h2> Next Steps </h2>
 
@@ -98,6 +114,6 @@ I hope to continue this project over winter break - the next step is to integrat
 
 https://devcenter.heroku.com/articles/getting-started-with-python-o - Setting up Flask to work with Heroku
 
-Python Docs
+https://docs.python.org/3/ - Python Docs
 
-Postgresql Docs
+http://www.postgresql.org/docs/ - Postgresql Docs
