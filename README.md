@@ -14,7 +14,9 @@ This app uses Python's Flask library and some basic HTML to present a functional
 
 The simplest way to use Locust Talk is to visit the live site on locust-talk.herokuapp.com. Use the buttons to navigate to the category that interests you. Then, you can either create a new topic, or enter an existing topic by clicking the corresponding hyperlink. You can then view messages, or post a new response by clicking the button at the buttom of the page. 
 
-<h2> Required Modules </h2>
+Alternatively, see instructions below under "CIS 192 Final Project Requirements" for how to run the app locally.
+
+<h2> Required Dependencies </h2>
 
 (from requirements.txt virtual environment) <br> <br>
 
@@ -26,6 +28,21 @@ gunicorn==19.1.1 <br>
 itsdangerous==0.24 <br>
 psycopg2==2.5.4 <br>
 wsgiref==0.1.2 <br>
+
+<h2> File Structure </h2>
+
+Locust_Talk <br>
+&nbsp;&nbsp;venv/ - includes all files for the virtual environment I used
+&nbsp;&nbsp;data/
+&nbsp;&nbsp;&nbsp;&nbsp;data_calls.py - most data management done here
+&nbsp;&nbsp;&nbsp;&nbsp;data_classes.py - custom classes, and some corresponding data pulling methods, can be found here
+&nbsp;&nbsp;&nbsp;&nbsp;utils.py - misc. utilities (e.g. custom decorator for debugging)
+&nbsp;&nbsp;static/ - includes media files for front end, and CSS
+&nbsp;&nbsp;templates/ - HTML templates for the app
+&nbsp;&nbsp;app.py - main orchestrator and router for the app
+&nbsp;&nbsp;Procfile - file that tells Heroku what to run
+&nbsp;&nbsp;requirements.txt - file that tells Heroku what dependencies we have
+
 
 <h2> Features </h2>
 
