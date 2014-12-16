@@ -32,16 +32,16 @@ wsgiref==0.1.2 <br>
 <h2> File Structure </h2>
 
 Locust_Talk <br>
-&nbsp;&nbsp;venv/ - includes all files for the virtual environment I used
-&nbsp;&nbsp;data/
-&nbsp;&nbsp;&nbsp;&nbsp;data_calls.py - most data management done here
-&nbsp;&nbsp;&nbsp;&nbsp;data_classes.py - custom classes, and some corresponding data pulling methods, can be found here
-&nbsp;&nbsp;&nbsp;&nbsp;utils.py - misc. utilities (e.g. custom decorator for debugging)
-&nbsp;&nbsp;static/ - includes media files for front end, and CSS
-&nbsp;&nbsp;templates/ - HTML templates for the app
-&nbsp;&nbsp;app.py - main orchestrator and router for the app
-&nbsp;&nbsp;Procfile - file that tells Heroku what to run
-&nbsp;&nbsp;requirements.txt - file that tells Heroku what dependencies we have
+&nbsp;&nbsp;venv/ - includes all files for the virtual environment I used <br>
+&nbsp;&nbsp;data/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;data_calls.py - most data management done here <br>
+&nbsp;&nbsp;&nbsp;&nbsp;data_classes.py - custom classes, and some corresponding data pulling methods, can be found here <br>
+&nbsp;&nbsp;&nbsp;&nbsp;utils.py - misc. utilities (e.g. custom decorator for debugging) <br>
+&nbsp;&nbsp;static/ - includes media files for front end, and CSS <br>
+&nbsp;&nbsp;templates/ - HTML templates for the app <br>
+&nbsp;&nbsp;app.py - main orchestrator and router for the app <br>
+&nbsp;&nbsp;Procfile - file that tells Heroku what to run <br>
+&nbsp;&nbsp;requirements.txt - file that tells Heroku what dependencies we have <br>
 
 
 <h2> Features </h2>
