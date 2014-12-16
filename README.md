@@ -16,16 +16,16 @@ The simplest way to use Locust Talk is to visit the live site on locust-talk.her
 
 <h2> Required Modules </h2>
 
-(from requirements.txt virtual environment)
+(from requirements.txt virtual environment) <br> <br>
 
-Flask==0.10.1
-Jinja2==2.7.3
-MarkupSafe==0.23
-Werkzeug==0.9.6
-gunicorn==19.1.1
-itsdangerous==0.24
-psycopg2==2.5.4
-wsgiref==0.1.2
+Flask==0.10.1 <br>
+Jinja2==2.7.3 <br>
+MarkupSafe==0.23 <br>
+Werkzeug==0.9.6 <br>
+gunicorn==19.1.1 <br>
+itsdangerous==0.24 <br>
+psycopg2==2.5.4 <br>
+wsgiref==0.1.2 <br>
 
 <h2> Features </h2>
 
