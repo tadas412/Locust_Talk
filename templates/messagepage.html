@@ -21,7 +21,7 @@
 		{% endfor %}
 		</ul>
 
-		<h1> {{ topic_name }}</h1>
+		<h1> {{ path }}/{{ topic_name }}</h1>
 		
 		
 		<ul>
@@ -43,6 +43,7 @@
 
 		<form action="/forum/postmessage" method="get">
 			<input type="hidden" value="{{ topic_id }}" name="topic_id">
+			<input type="hidden" value="{{ path }}" name="path">
 			<input type="submit" value="POST A RESPONSE">
 		</form>
 	

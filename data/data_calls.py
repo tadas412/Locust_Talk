@@ -20,7 +20,7 @@
 				Events
 """
 
-categories = {
+categories = { # hierarchy in dictionary form
 	"academics": {
 		"profs_and_classes": None,
 		"majors_and_minors": None
@@ -44,18 +44,21 @@ categories = {
 	}
 }
 
-# Database overhead
+####### Database overhead #######
 
 import os
 import psycopg2
 import urlparse
 from data_classes import *
 
+DB_URL = """postgres://lgkwmidyijnter:pk6dLPvtxbdcQkSJwAO37wWyUs@ec2-174-129
+-218-200.compute-1.amazonaws.com:5432/d3fh8us93rc8er"""
+
 urlparse.uses_netloc.append("postgres")
 try:
-	url = urlparse.urlparse(os.environ["DATABASE_URL"])
+	url = urlparse.urlparse(os.environ["DATABASE_URL"]) # used when on heroku
 except:
-	url = urlparse.urlparse("postgres://lgkwmidyijnter:pk6dLPvtxbdcQkSJwAO37wWyUs@ec2-174-129-218-200.compute-1.amazonaws.com:5432/d3fh8us93rc8er")
+	url = urlparse.urlparse(DB_URL)
 
 conn = psycopg2.connect(
     database=url.path[1:],
@@ -64,6 +67,8 @@ conn = psycopg2.connect(
     host=url.hostname,
     port=url.port
 )
+
+####### End Database overhead #######
 
 def navbar_categories():
 	return ["Home"] + get_high_categories() + ["About Us"]

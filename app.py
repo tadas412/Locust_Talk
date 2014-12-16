@@ -57,13 +57,15 @@ def responsespage():
 		page = int(request.args['page'])
 	except KeyError:
 		page = 1
+	path = dc.determine_path(topic.category, topic.subcat1,
+		topic.subcat2, topic.subcat3)
 	pages = [i + 1 for i in range(topic.get_num_pages())]
 	page = page if page < max(pages) else max(pages)
 	messages = topic.get_messages()
 	messages = itertools.islice(messages, (page - 1) * 5, page * 5)
 	return render_template('messagepage.html', topic_name=topic.topic_name, 
 		messages=messages, navbar=dc.navbar_categories(), topic_id=topic_id,
-		pages=pages)
+		pages=pages, path=path)
 
 
 
@@ -88,8 +90,9 @@ def submitposttopic():
 def postmessagepage():
 	topic_id = int(request.args['topic_id'])
 	topic = dc.get_topic_by_id(topic_id)
+	path = request.args['path']
 	return render_template('postmessagepage.html', topic=topic,
-		navbar=dc.navbar_categories())
+		navbar=dc.navbar_categories(), path=path)
 
 # Submit post message
 @app.route('/forum/postmessage/submit', methods=['POST'])

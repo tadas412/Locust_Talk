@@ -5,7 +5,7 @@ Web app that allows visitors to post messages on a forum-style board.
 
 VIEW THIS README ON GITHUB!
 
-Github: https://github.com/tadas412/Locust_Talk
+Github: https://github.com/tadas412/Locust_Talk <br>
 Heroku live app: locust-talk.herokuapp.com
 
 <h2> Overview </h2>
@@ -13,6 +13,19 @@ Heroku live app: locust-talk.herokuapp.com
 This app uses Python's Flask library and some basic HTML to present a functional forum-style board, intended for use by Penn students. Backend data storage uses PostgreSQL. 
 
 The simplest way to use Locust Talk is to visit the live site on locust-talk.herokuapp.com. Use the buttons to navigate to the category that interests you. Then, you can either create a new topic, or enter an existing topic by clicking the corresponding hyperlink. You can then view messages, or post a new response by clicking the button at the buttom of the page. 
+
+<h2> Required Modules </h2>
+
+(from requirements.txt virtual environment)
+
+Flask==0.10.1
+Jinja2==2.7.3
+MarkupSafe==0.23
+Werkzeug==0.9.6
+gunicorn==19.1.1
+itsdangerous==0.24
+psycopg2==2.5.4
+wsgiref==0.1.2
 
 <h2> Features </h2>
 
@@ -98,7 +111,7 @@ Table: <i>topics</i> <br>
 &nbsp;&nbsp;&nbsp;&nbsp;subcat3 - varchar(32)<br>
 
 
-messages
+Table: <i>messages</i> <br>
 &nbsp;&nbsp;&nbsp;&nbsp;message_id - bigint<br>
 &nbsp;&nbsp;&nbsp;&nbsp;author - varchar(32) <br>
 &nbsp;&nbsp;&nbsp;&nbsp;message - text<br>
