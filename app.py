@@ -20,7 +20,6 @@ import utils
 
 # Get the app started
 app = Flask(__name__)
-do_debug = False  # Later potentially changed by command line args
 
 
 # Homepage
@@ -140,8 +139,8 @@ def main():
     optparser.add_option('-d', dest="debug", action="store_true",
                          default=False)
     options, _ = optparser.parse_args()
-    do_debug = options.debug
-    app.run(debug=do_debug, port=options.port)
+    utils.set_debug(options.debug)
+    app.run(debug=utils.do_debug, port=options.port)
 
 
 if __name__ == '__main__':
