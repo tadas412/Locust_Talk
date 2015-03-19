@@ -1,6 +1,8 @@
 Locust Talk
 ========
 
+MADE CHANGES
+
 Web app that allows visitors to post messages on a forum-style board.
 
 VIEW THIS README ON GITHUB!
